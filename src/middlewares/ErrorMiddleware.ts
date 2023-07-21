@@ -13,7 +13,7 @@ export default class ErrorMiddleware implements ExpressErrorMiddlewareInterface 
                 return next(error)
             }
 
-            let apiResponse: ApiResponseType<undefined>;
+            let apiResponse: ApiResponseType;
 
             if (error.name === 'BadRequestError' && (error as any).errors) {
 

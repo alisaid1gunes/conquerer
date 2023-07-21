@@ -15,21 +15,27 @@ export class AuthService {
 
 
     async registerUser(registerDto: RegisterDto): Promise<User> {
-        const { fullName, password } = registerDto;
+        const { fullName, password, email } = registerDto;
+
+        const isEmailUsed = await this.userRepository.findOne({where: {email}});
+        if(isEmailUsed){
+            throw new Error('email already registered');
+        }
 
         const username= await this.turkishToEnglish(fullName)
 
         if (!this.isPasswordValid(password)) {
             throw new Error('Password must contain at least one special character');
         }
-        const user = await this.userRepository.findOne({where: {username}});
-        if(user){
+        const isUsernameUsed = await this.userRepository.findOne({where: {username}});
+        if(isUsernameUsed){
             throw new Error('username already taken')
         }
         const hashedPassword = await bcrypt.hash(password, 10);
         const newUser = new User();
         newUser.fullName = fullName;
         newUser.username = username;
+        newUser.email = email;
         newUser.password = hashedPassword;
         return await this.userRepository.save(newUser);
     }

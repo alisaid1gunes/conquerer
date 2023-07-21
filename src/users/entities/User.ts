@@ -6,14 +6,16 @@ export class User {
     @PrimaryGeneratedColumn()
     id: number;
 
-    @Column()
+    @Column({length:25, nullable:false})
     fullName: string;
 
-    @Column()
+    @Column({length:25, nullable:false})
     username: string;
 
-    @Column()
-    @MinLength(8)
+    @Column({length:25, nullable:false})
+    email: string;
+
+    @Column({ nullable:false})
     password: string;
 
     @Index()
@@ -21,10 +23,13 @@ export class User {
     refreshToken: string | null;
     
 
-    @CreateDateColumn({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP', })
+    @Column({type: 'timestamp', nullable: true})
+    birthDate?: Date;
+
+    @CreateDateColumn({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP',nullable: true })
     createdAt: Date;
 
-    @UpdateDateColumn({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP',})
+    @UpdateDateColumn({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP'})
     updateAt: Date;
 
 }
