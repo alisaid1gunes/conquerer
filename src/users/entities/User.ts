@@ -26,7 +26,7 @@ export class User {
     @Column({type: 'timestamp', nullable: true})
     birthDate?: Date;
 
-    @CreateDateColumn({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP',nullable: true })
+    @CreateDateColumn({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP',nullable: false })
     createdAt: Date;
 
     @UpdateDateColumn({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP'})

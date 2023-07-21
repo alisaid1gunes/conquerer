@@ -6,27 +6,26 @@ import { createDatabaseConnection } from './connection';
 import { UserController } from './users/controllers/UserController';
 import { AuthController } from './auth/controllers/AuthController'
 import {currentUserChecker} from "./middlewares/currenUserChecker";
-
-import {AuthMiddleware} from "./middlewares/AuthMiddleware";
-import {errorHandler} from "ioredis/built/redis/event_handler";
 import ErrorMiddleware from "./middlewares/ErrorMiddleware";
 import ResponseMiddleware from "./middlewares/ResponseMiddleware";
-
+import {createCategories} from './categoryInit'
 
 
 async function startApp() {
-    // Create the database connection
+
     await createDatabaseConnection();
 
-    // Set up TypeDI container
+
     const container = Container.of(undefined);
 
 
-    // Enable TypeDI container for routing-controllers
+
     useContainer(container);
 
-    // Set up routing-controllers with the dependency injection container
+
     const app = express();
+
+
 
     useExpressServer(app, {
         controllers: [AuthController,UserController],
@@ -34,13 +33,13 @@ async function startApp() {
         middlewares: [ErrorMiddleware],
         interceptors: [ResponseMiddleware],
         defaultErrorHandler: false,
+
     });
 
 
-
-    // Start the server
-    app.listen(3000, () => {
+    app.listen(3000, async() => {
         console.log('Server running on http://localhost:3000');
+        await createCategories();
     });
 }
 
