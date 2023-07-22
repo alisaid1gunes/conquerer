@@ -1,4 +1,13 @@
-import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, Index, OneToMany } from 'typeorm';
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  CreateDateColumn,
+  UpdateDateColumn,
+  Index,
+  OneToMany,
+  DeleteDateColumn,
+} from 'typeorm';
 import { MinLength } from 'class-validator';
 import { Blog } from '../../blogs/entities/Blog';
 import { Comment } from '../../comments/entities/Comment';
@@ -27,10 +36,10 @@ export class User {
   @Column({ type: 'timestamp', nullable: true })
   birthDate?: Date;
 
-  @OneToMany(() => Blog, (blog) => blog.author)
+  @OneToMany(() => Blog, (blog) => blog.author, { cascade: ['soft-remove'] })
   blogs?: Blog[];
 
-  @OneToMany(() => Comment, (comment) => comment.user)
+  @OneToMany(() => Comment, (comment) => comment.user, { cascade: ['soft-remove'] })
   comments?: Comment[];
 
   @Index()
@@ -39,4 +48,7 @@ export class User {
 
   @UpdateDateColumn({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
   updateAt?: Date;
+
+  @DeleteDateColumn({ type: 'timestamp' })
+  deletedAt: Date;
 }

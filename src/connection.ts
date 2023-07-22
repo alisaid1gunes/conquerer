@@ -8,6 +8,7 @@ import { CategoryRepository } from './categories/repositories/CategoryRepository
 import { Blog } from './blogs/entities/Blog';
 import { Comment } from './comments/entities/Comment';
 import { BlogRepository } from './blogs/repositories/BlogRepository';
+import { CommentRepository } from './comments/repositories/CommentRepository';
 
 export const createDatabaseConnection = async () => {
   const connection = await createConnection({
@@ -24,8 +25,10 @@ export const createDatabaseConnection = async () => {
   const userRepository = getRepository(User);
   const categoryRepository = getRepository(Category);
   const blogRepository = getRepository(Blog);
+  const commentRepository = getRepository(Comment);
   Container.set(UserRepository, userRepository);
   Container.set(CategoryRepository, categoryRepository);
   Container.set(BlogRepository, blogRepository);
+  Container.set(CommentRepository, commentRepository);
   console.log('Connected to the database');
 };

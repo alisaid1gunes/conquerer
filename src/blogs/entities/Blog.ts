@@ -32,7 +32,7 @@ export class Blog {
   @ManyToOne(() => Category, (category) => category.blogs)
   category: Category;
 
-  @OneToMany(() => Comment, (comment) => comment.blog)
+  @OneToMany(() => Comment, (comment) => comment.blog, { cascade: true })
   comments?: Comment[];
 
   @Index()

@@ -105,6 +105,10 @@ export class BlogService {
     return result;
   }
 
+  async getBlogDefault(id: number): Promise<Blog | null> {
+    return await this.blogRepository.findOne({ where: { id: id } });
+  }
+
   async createBlog(createBlogDto: CreateBlogDto, user: User): Promise<void> {
     const blog = new Blog();
     blog.title = createBlogDto.title;
@@ -131,7 +135,7 @@ export class BlogService {
   }
 
   async deleteBlog(id: number, user: User): Promise<void> {
-    const blog = await this.blogRepository.findOne({ where: { id }, relations: ['author'] });
+    const blog = await this.blogRepository.findOne({ where: { id }, relations: ['comments', 'author'] });
     if (blog) {
       if (blog?.author.id !== user.id) throw new Error('Blog only deletable for author');
       await this.blogRepository.softRemove(blog);

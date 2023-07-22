@@ -30,12 +30,11 @@ export class AuthController {
   @HttpCode(201)
   async register(@Res() response: Response, @Body() registerDto: RegisterDto): Promise<ApiResponseType> {
     try {
-      const user = await this.authService.registerUser(registerDto);
+      await this.authService.registerUser(registerDto);
 
       const apiResponse: ApiResponseType = {
         success: true,
         message: 'User registered successfully',
-        data: user,
       };
       return apiResponse;
     } catch (error: any) {

@@ -10,6 +10,7 @@ import ErrorMiddleware from './middlewares/ErrorMiddleware';
 import ResponseMiddleware from './middlewares/ResponseMiddleware';
 import { createCategories } from './categoryInit';
 import { BlogController } from './blogs/controllers/BlogController';
+import { CommentController } from './comments/controllers/CommentController';
 
 async function startApp() {
   await createDatabaseConnection();
@@ -21,7 +22,7 @@ async function startApp() {
   const app = express();
 
   useExpressServer(app, {
-    controllers: [AuthController, UserController, BlogController],
+    controllers: [AuthController, UserController, BlogController, CommentController],
     currentUserChecker: currentUserChecker,
     middlewares: [ErrorMiddleware],
     interceptors: [ResponseMiddleware],
