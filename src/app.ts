@@ -11,6 +11,7 @@ import ResponseMiddleware from './middlewares/ResponseMiddleware';
 import { createCategories } from './categoryInit';
 import { BlogController } from './blogs/controllers/BlogController';
 import { CommentController } from './comments/controllers/CommentController';
+import { ElasticController } from './elastic/controllers/ElasticController';
 
 async function startApp() {
   await createDatabaseConnection();
@@ -22,7 +23,7 @@ async function startApp() {
   const app = express();
 
   useExpressServer(app, {
-    controllers: [AuthController, UserController, BlogController, CommentController],
+    controllers: [AuthController, UserController, BlogController, CommentController, ElasticController],
     currentUserChecker: currentUserChecker,
     middlewares: [ErrorMiddleware],
     interceptors: [ResponseMiddleware],
