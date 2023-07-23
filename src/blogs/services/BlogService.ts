@@ -54,19 +54,17 @@ export class BlogService {
     }
 
     query
-      .select(['blog.id', 'blog.title'])
+      .select(['blog.id', 'blog.title', 'blog.createdAt'])
       .leftJoin('blog.author', 'author')
       .addSelect('author.username')
       .leftJoin('blog.category', 'category')
       .addSelect(['category.name'])
-      .leftJoin('blog.comments', 'comments');
-
-    query.loadRelationCountAndMap('blog.commentCount', 'blog.comments');
-
+      .leftJoin('blog.comments', 'comments')
+      .loadRelationCountAndMap('blog.commentCount', 'blog.comments');
     const [blogs, count] = await query
       .orderBy('blog.createdAt', 'DESC')
-      .limit(pagination.pageSize)
-      .offset(skipCount)
+      .take(pagination.pageSize)
+      .skip(skipCount)
       .getManyAndCount();
 
     return { blogs, total: count };
