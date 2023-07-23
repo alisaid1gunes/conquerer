@@ -17,7 +17,7 @@ export class AuthService {
     private redisService: RedisService,
   ) {}
 
-  async registerUser(registerDto: RegisterDto): Promise<void> {
+  async registerUser(registerDto: RegisterDto): Promise<string> {
     const { fullName, password, email } = registerDto;
 
     const isEmailUsed = await this.userRepository.findOne({ where: { email } });
@@ -42,6 +42,7 @@ export class AuthService {
     newUser.password = hashedPassword;
     const result = await this.userRepository.save(newUser);
     if (!result) throw new Error('User could not be saved');
+    return 'user created successfully with username ' + newUser.username;
   }
 
   async loginUser(loginDto: LoginDto): Promise<{ accessToken: string; refreshToken: string }> {
