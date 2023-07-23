@@ -124,7 +124,6 @@ export class ElasticService {
           },
         },
       });
-      console.dir({ bloggersResponse }, { depth: null });
       const bloggerCount = bloggersResponse.aggregations.unique_bloggers.value;
 
       const readerCount = totalUsersCount - bloggerCount;

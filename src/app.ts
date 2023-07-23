@@ -14,6 +14,7 @@ import { CommentController } from './comments/controllers/CommentController';
 import { ElasticController } from './elastic/controllers/ElasticController';
 import compression from 'compression';
 import helmet from 'helmet';
+import config from './config/config';
 async function startApp() {
   await createDatabaseConnection();
 
@@ -37,8 +38,8 @@ async function startApp() {
     defaultErrorHandler: false,
   });
 
-  app.listen(3000, async () => {
-    console.log('Server running on http://localhost:3000');
+  app.listen(config.server.port, async () => {
+    console.log('Server running on port:', config.server.port);
     await createCategories();
   });
 }

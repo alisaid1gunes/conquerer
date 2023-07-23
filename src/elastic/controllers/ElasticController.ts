@@ -1,10 +1,7 @@
-import { JsonController, Get, HttpError, HttpCode, QueryParam } from 'routing-controllers';
-
+import { JsonController, Get, HttpError, HttpCode, QueryParam, UseBefore } from 'routing-controllers';
 import { ApiResponseType } from '../../shared/ApiResponseType';
 import { Service } from 'typedi';
 import { ElasticService } from '../services/ElasticService';
-import { TimeFrameDto } from '../dto/TimeFrameDto';
-import { BlogListType } from '../../shared/BlogListType';
 
 @JsonController('/elastic')
 @Service()
