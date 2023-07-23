@@ -25,12 +25,6 @@ import { UserUpdateProfileDto } from '../dto/UserUpdateProfileDto';
 export class UserController {
   constructor(private readonly userService: UserService) {}
 
-  @Get('/')
-  @HttpCode(200)
-  async getAllUsers(): Promise<User[]> {
-    return this.userService.getAllUsers();
-  }
-
   @Get('/me')
   @HttpCode(200)
   async me(@Res() response: Response, @CurrentUser() user: User): Promise<ApiResponseType> {
@@ -65,7 +59,6 @@ export class UserController {
       const apiResponse: ApiResponseType = {
         success: true,
         message: 'User profile successfully updated',
-        data: result,
       };
       return apiResponse;
     } catch (error: any) {
