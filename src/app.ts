@@ -12,7 +12,8 @@ import { createCategories } from './categoryInit';
 import { BlogController } from './blogs/controllers/BlogController';
 import { CommentController } from './comments/controllers/CommentController';
 import { ElasticController } from './elastic/controllers/ElasticController';
-
+import compression from 'compression';
+import helmet from 'helmet';
 async function startApp() {
   await createDatabaseConnection();
 
@@ -22,6 +23,12 @@ async function startApp() {
 
   const app = express();
 
+  app.use(helmet());
+  app.use(
+    compression({
+      threshold: 0,
+    }),
+  );
   useExpressServer(app, {
     controllers: [AuthController, UserController, BlogController, CommentController, ElasticController],
     currentUserChecker: currentUserChecker,
